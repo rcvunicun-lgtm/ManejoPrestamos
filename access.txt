@@ -1,0 +1,24 @@
+1. RewriteEngine On
+
+Descripción: Esta línea activa el motor de reescritura de URLs de Apache. 
+Es necesario para que las reglas de reescritura que siguen tengan efecto. 
+Sin esta línea, las demás reglas no se aplicarán.
+
+2. Options All -Indexes
+
+Descripción: Esta línea configura las opciones del directorio.
+Options All: Habilita todas las opciones disponibles para ese directorio.
+-Indexes: Deshabilita la lista de directorios. Si un usuario intenta acceder a un directorio sin un archivo de índice (como index.php), verá un error 403 en lugar de una lista de los archivos en ese directorio. Esto mejora la seguridad, ya que evita que los usuarios vean la estructura de archivos.
+
+3. RewriteRule ^([a-zA-Z0-9/ñÑ-]+)$ index.php?views=$1
+
+Descripción: Esta línea define una regla de reescritura.
+^([a-zA-Z0-9/ñÑ-]+)$: Este es un patrón que se busca en la URL solicitada. El símbolo ^ indica el inicio de la cadena, y $ indica el final.
+([a-zA-Z0-9/ñÑ-]+): Captura cualquier cadena que contenga letras (mayúsculas y minúsculas), números, la letra "ñ", guiones, o barras (/).
+El uso de los paréntesis () significa que lo que se encuentra dentro será almacenado como una variable, que en este caso se refiere a $1.
+index.php?views=$1: Si la URL coincide con el patrón, se redirige a index.php, pasando el valor capturado como un parámetro views. 
+
+Por ejemplo, si un usuario accede a tusitio.com/pagina, se redirigirá internamente a index.php?views=pagina.
+
+Resumen
+En conjunto, estas líneas permiten que tu aplicación maneje URLs amigables y desactiva la lista de directorios, mejorando la seguridad y la usabilidad de tu sitio web.

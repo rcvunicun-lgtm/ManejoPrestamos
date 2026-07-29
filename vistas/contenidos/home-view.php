@@ -1,0 +1,109 @@
+<!-- Page header -->
+<div class="full-box page-header">
+    <h3 class="text-left">
+        <i class="fab fa-dashcube fa-fw"></i> &nbsp; DASHBOARD
+    </h3>
+    <p class="text-justify">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit nostrum rerum animi natus beatae ex. Culpa
+        blanditiis tempore amet alias placeat, obcaecati quaerat ullam, sunt est, odio aut veniam ratione.
+    </p>
+
+     <p>Este proyecto fue realizado con apoyo de:</p>
+    <a href="https://www.youtube.com/watch?v=CB0Ug_XGgPU&list=PLH_tVOsiVGzmn89QxjFTCE19rLSDqG03U&index=122" target="_blank">https://www.youtube.com/watch?v=CB0Ug_XGgPU&list=PLH_tVOsiVGzmn89QxjFTCE19rLSDqG03U&index=122</a>
+    
+    <br><br> 
+
+    <p>Otro curso de php Interesante:</p>
+    <a href="https://www.youtube.com/playlist?list=PLH_tVOsiVGzl-l_yDiedZyOKZSUayupki" target="_blank">https://www.youtube.com/playlist?list=PLH_tVOsiVGzl-l_yDiedZyOKZSUayupki</a> 
+    <br>
+    <a href="https://www.youtube.com/watch?v=NIff0KF_nWk&list=PLH_tVOsiVGzl-l_yDiedZyOKZSUayupki" target="_blank">https://www.youtube.com/watch?v=NIff0KF_nWk&list=PLH_tVOsiVGzl-l_yDiedZyOKZSUayupki</a>
+</div>
+
+<!-- Content -->
+<div class="full-box tile-container">
+    <?php
+        require_once "./controladores/clienteControlador.php";
+        $ins_cliente = new clienteControlador();
+
+        $total_clientes = $ins_cliente->datos_cliente_controlador("Conteo",0);
+    ?>
+    <a href="<?php echo(SERVERURL); ?>client-list/" class="tile">
+        <div class="tile-tittle">Clientes</div>
+        <div class="tile-icon">
+            <i class="fas fa-users fa-fw"></i>
+            <p><?php echo($total_clientes->rowCount());?> Registrados</p>
+        </div>
+    </a>
+
+    <?php
+        require_once "./controladores/itemControlador.php";
+        $ins_item = new ItemControlador();
+
+        $total_items = $ins_item->datos_item_controlador("Conteo",0);
+    ?>
+    <a href="<?php echo(SERVERURL); ?>item-list/" class="tile">
+        <div class="tile-tittle">Items</div>
+        <div class="tile-icon">
+            <i class="fas fa-pallet fa-fw"></i>
+            <p><?php echo($total_items->rowCount());?> Registrados</p>
+        </div>
+    </a>
+
+    <?php
+        require_once "./controladores/prestamoControlador.php";
+        $ins_prestamo = new PrestamoControlador();
+
+        $total_prestamos = $ins_prestamo->datos_prestamo_controlador("Conteo_Prestamos",0);
+        $total_reservaciones = $ins_prestamo->datos_prestamo_controlador("Conteo_Reservacion",0);
+        $total_finalizados = $ins_prestamo->datos_prestamo_controlador("Conteo_Finalizado",0);
+    ?>
+
+    <a href="<?php echo(SERVERURL); ?>reservation-reservation/" class="tile">
+        <div class="tile-tittle">Reservaciones</div>
+        <div class="tile-icon">
+            <i class="far fa-calendar-alt fa-fw"></i>
+            <p><?php echo($total_prestamos->rowCount());?>  Registradas</p>
+        </div>
+    </a>
+
+    <a href="<?php echo(SERVERURL); ?>reservation-pending/" class="tile">
+        <div class="tile-tittle">Prestamos</div>
+        <div class="tile-icon">
+            <i class="fas fa-hand-holding-usd fa-fw"></i>
+            <p><?php echo($total_reservaciones->rowCount());?> Registrados</p>
+        </div>
+    </a>
+
+    <a href="<?php echo(SERVERURL); ?>reservation-list/" class="tile">
+        <div class="tile-tittle">Finalizados</div>
+        <div class="tile-icon">
+            <i class="fas fa-clipboard-list fa-fw"></i>
+            <p><?php echo($total_finalizados->rowCount());?> Registrados</p>
+        </div>
+    </a>
+    <?php
+        if($_SESSION['privilegio_spm'] == 1){ 
+            require_once "./controladores/usuarioControlador.php";
+            $ins_usuario = new usuarioControlador();
+            $total_usuario = $ins_usuario->datos_usuario_controlador("Conteo",0);
+
+    ?>
+    <a href="<?php echo(SERVERURL); ?>user-list/" class="tile">
+        <div class="tile-tittle">Usuarios</div>
+        <div class="tile-icon">
+            <i class="fas fa-user-secret fa-fw"></i>
+            <p><?php echo($total_usuario->rowCount());?> Registrados</p>
+        </div>
+    </a>
+    <?php
+        }
+    ?>
+
+    <a href="<?php echo(SERVERURL); ?>company/" class="tile">
+        <div class="tile-tittle">Empresa</div>
+        <div class="tile-icon">
+            <i class="fas fa-store-alt fa-fw"></i>
+            <p>1 Registrada</p>
+        </div>
+    </a>
+</div>
